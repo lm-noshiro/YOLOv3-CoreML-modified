@@ -88,7 +88,7 @@ class ViewController: UIViewController {
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
-    videoCapture.fps = 50
+    videoCapture.fps = 10
     videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
       if success {
         // Add the video preview into the UI.
@@ -215,17 +215,17 @@ class ViewController: UIViewController {
         // on the video preview, which is as wide as the screen and has a 4:3
         // aspect ratio. The video preview also may be letterboxed at the top
         // and bottom.
-        let width = view.bounds.width
-        let height = width * 4 / 3
+        let height = view.bounds.height
+        let width = height * 4 / 3
         let scaleX = width / CGFloat(YOLO.inputWidth)
         let scaleY = height / CGFloat(YOLO.inputHeight)
-        let top = (view.bounds.height - height) / 2
+        let left = (view.bounds.width - width) / 2
 
         // Translate and scale the rectangle to our own coordinate system.
         var rect = prediction.rect
         rect.origin.x *= scaleX
         rect.origin.y *= scaleY
-        rect.origin.y += top
+        rect.origin.x += left
         rect.size.width *= scaleX
         rect.size.height *= scaleY
 

@@ -17,7 +17,8 @@ class YOLO {
     let rect: CGRect
   }
 
-  let model = YOLOv3()
+//  let model = YOLOv3()
+  let model = Yolov3Zenrin()
 
   public init() { }
 

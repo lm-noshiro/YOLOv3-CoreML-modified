@@ -10,6 +10,7 @@
 		372CB262209C9B0F00F501E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372CB261209C9B0F00F501E3 /* AppDelegate.swift */; };
 		372CB265209C9B2600F501E3 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372CB263209C9B2600F501E3 /* BoundingBox.swift */; };
 		372CB266209C9B2600F501E3 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372CB264209C9B2600F501E3 /* Helpers.swift */; };
+		494642AE22D7118100614A86 /* Yolov3Zenrin.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 494642AD22D7118100614A86 /* Yolov3Zenrin.mlmodel */; };
 		7BA1C6D01EF27DA000BB25EF /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC25FB51EF27C0D002ECBBA /* VideoCapture.swift */; };
 		7BA1C6D21EF2827800BB25EF /* UIImage+CVPixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1C6D11EF2827500BB25EF /* UIImage+CVPixelBuffer.swift */; };
 		7BA1C6D81EF2871600BB25EF /* YOLO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1C6D71EF2871600BB25EF /* YOLO.swift */; };
@@ -24,6 +25,7 @@
 		372CB261209C9B0F00F501E3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		372CB263209C9B2600F501E3 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		372CB264209C9B2600F501E3 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		494642AD22D7118100614A86 /* Yolov3Zenrin.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Yolov3Zenrin.mlmodel; sourceTree = "<group>"; };
 		7BA1C6D11EF2827500BB25EF /* UIImage+CVPixelBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CVPixelBuffer.swift"; sourceTree = "<group>"; };
 		7BA1C6D71EF2871600BB25EF /* YOLO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLO.swift; sourceTree = "<group>"; };
 		7BA1C6D91EF2B30200BB25EF /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				7BC25FAD1EF1B7D1002ECBBA /* Info.plist */,
 				7BC25FA51EF1B7D1002ECBBA /* Main.storyboard */,
 				7BC25FB31EF1CEAE002ECBBA /* YOLOv3.mlmodel */,
+				494642AD22D7118100614A86 /* Yolov3Zenrin.mlmodel */,
 				7BA1C6D11EF2827500BB25EF /* UIImage+CVPixelBuffer.swift */,
 				7BC25FB51EF27C0D002ECBBA /* VideoCapture.swift */,
 				7BC25FA31EF1B7D1002ECBBA /* ViewController.swift */,
@@ -118,7 +121,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7BC25F991EF1B7D1002ECBBA /* Build configuration list for PBXProject "YOLOv3-CoreML" */;
+			buildConfigurationList = 7BC25F991EF1B7D1002ECBBA /* Build configuration list for PBXProject "YOLOv3-CoreML_modified" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,6 +162,7 @@
 				372CB265209C9B2600F501E3 /* BoundingBox.swift in Sources */,
 				372CB266209C9B2600F501E3 /* Helpers.swift in Sources */,
 				372CB262209C9B0F00F501E3 /* AppDelegate.swift in Sources */,
+				494642AE22D7118100614A86 /* Yolov3Zenrin.mlmodel in Sources */,
 				7BA1C6D21EF2827800BB25EF /* UIImage+CVPixelBuffer.swift in Sources */,
 				7BC25FA41EF1B7D1002ECBBA /* ViewController.swift in Sources */,
 				7BA1C6D81EF2871600BB25EF /* YOLO.swift in Sources */,
@@ -325,7 +329,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7BC25F991EF1B7D1002ECBBA /* Build configuration list for PBXProject "YOLOv3-CoreML" */ = {
+		7BC25F991EF1B7D1002ECBBA /* Build configuration list for PBXProject "YOLOv3-CoreML_modified" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7BC25FAE1EF1B7D1002ECBBA /* Debug */,

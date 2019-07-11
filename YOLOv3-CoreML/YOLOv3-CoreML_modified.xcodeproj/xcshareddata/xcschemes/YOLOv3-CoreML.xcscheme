@@ -35,7 +35,7 @@
             BlueprintIdentifier = "7BC25F9D1EF1B7D1002ECBBA"
             BuildableName = "YOLOv3-CoreML.app"
             BlueprintName = "YOLOv3-CoreML"
-            ReferencedContainer = "container:YOLOv3-CoreML.xcodeproj">
+            ReferencedContainer = "container:YOLOv3-CoreML_modified.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "7BC25F9D1EF1B7D1002ECBBA"
             BuildableName = "YOLOv3-CoreML.app"
             BlueprintName = "YOLOv3-CoreML"
-            ReferencedContainer = "container:YOLOv3-CoreML.xcodeproj">
+            ReferencedContainer = "container:YOLOv3-CoreML_modified.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

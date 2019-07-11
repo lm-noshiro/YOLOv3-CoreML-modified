@@ -23,7 +23,7 @@ class YOLO {
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
     if let output = try? model.prediction(input1: image) {
-        dump(output)
+//        dump(output.output1)
       return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
     } else {
       return []
@@ -31,6 +31,8 @@ class YOLO {
   }
 
   public func computeBoundingBoxes(features: [MLMultiArray]) -> [Prediction] {
+//    dump(features[0,0])
+//    print(features[0][0])
     assert(features[0].count == 210*32*32)
     assert(features[1].count == 210*64*64)
     assert(features[2].count == 210*128*128)
@@ -87,7 +89,7 @@ class YOLO {
                     // The predicted tx and ty coordinates are relative to the location
                     // of the grid cell; we use the logistic sigmoid to constrain these
                     // coordinates to the range 0 - 1. Then we add the cell coordinates
-                    // (0-12) and multiply by the number of pixels per grid cell (32).
+                    // (0-31) and multiply by the number of pixels per grid cell (32).
                     // Now x and y represent center of the bounding box in the original
                     // 1024x1024 image space.
                     let scale = powf(2.0,Float(i)) // scale pos by 2^i where i is the scale pyramid level

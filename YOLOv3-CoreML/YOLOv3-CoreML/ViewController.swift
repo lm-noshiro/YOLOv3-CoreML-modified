@@ -152,6 +152,7 @@ class ViewController: UIViewController {
     // Resize the input to 1024x1024 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {
       let elapsed = CACurrentMediaTime() - startTime
+//      print(boundingBoxes)
       showOnMainThread(boundingBoxes, elapsed)
     }
   }
@@ -184,6 +185,7 @@ class ViewController: UIViewController {
       //VTCreateCGImageFromCVPixelBuffer(resizedPixelBuffer, nil, &debugImage)
       //self.debugImageView.image = UIImage(cgImage: debugImage!)
 
+        
       self.show(predictions: boundingBoxes)
 
       let fps = self.measureFPS()

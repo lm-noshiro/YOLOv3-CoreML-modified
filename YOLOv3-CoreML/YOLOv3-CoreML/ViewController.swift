@@ -152,7 +152,7 @@ class ViewController: UIViewController {
     // Resize the input to 416x416 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {
       let elapsed = CACurrentMediaTime() - startTime
-        print(boundingBoxes)
+//        print(boundingBoxes)
       showOnMainThread(boundingBoxes, elapsed)
     }
   }

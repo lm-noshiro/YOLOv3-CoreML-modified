@@ -135,7 +135,7 @@ class ViewController: UIViewController {
     // Measure how long it takes to predict a single video frame.
     let startTime = CACurrentMediaTime()
 
-    // Resize the input with Core Image to 416x416.
+    // Resize the input with Core Image to 1024x1024.
     guard let resizedPixelBuffer = resizedPixelBuffer else { return }
     let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
     let sx = CGFloat(YOLO.inputWidth) / CGFloat(CVPixelBufferGetWidth(pixelBuffer))
@@ -149,7 +149,7 @@ class ViewController: UIViewController {
     //                                              width: YOLO.inputWidth,
     //                                              height: YOLO.inputHeight)
 
-    // Resize the input to 416x416 and give it to our model.
+    // Resize the input to 1024x1024 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {
       let elapsed = CACurrentMediaTime() - startTime
       showOnMainThread(boundingBoxes, elapsed)
@@ -211,7 +211,7 @@ class ViewController: UIViewController {
         let prediction = predictions[i]
 
         // The predicted bounding box is in the coordinate space of the input
-        // image, which is a square image of 416x416 pixels. We want to show it
+        // image, which is a square image of 1024x1024 pixels. We want to show it
         // on the video preview, which is as wide as the screen and has a 4:3
         // aspect ratio. The video preview also may be letterboxed at the top
         // and bottom.

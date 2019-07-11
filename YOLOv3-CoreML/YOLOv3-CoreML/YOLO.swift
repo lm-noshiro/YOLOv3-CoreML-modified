@@ -23,6 +23,7 @@ class YOLO {
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
     if let output = try? model.prediction(input1: image) {
+        dump(output)
       return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
     } else {
       return []

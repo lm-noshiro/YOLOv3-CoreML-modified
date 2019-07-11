@@ -36,25 +36,25 @@ class YOLO {
 
     var predictions = [Prediction]()
 
-    let blockSize: Float = 32
+    let blockSize: Float = 32  // 1024 / 32
     let boxesPerCell = 3
     let numClasses = 65
 
-    // The 416x416 image is divided into a 13x13 grid. Each of these grid cells
+    // The 1024x1024 image is divided into a 32x32 grid. Each of these grid cells
     // will predict 5 bounding boxes (boxesPerCell). A bounding box consists of
     // five data items: x, y, width, height, and a confidence score. Each grid
     // cell also predicts which class each bounding box belongs to.
     //
     // The "features" array therefore contains (numClasses + 5)*boxesPerCell
     // values for each grid cell, i.e. 125 channels. The total features array
-    // contains 255x13x13 elements.
+    // contains 210x32x32 elements.
 
     // NOTE: It turns out that accessing the elements in the multi-array as
     // `features[[channel, cy, cx] as [NSNumber]].floatValue` is kinda slow.
     // It's much faster to use direct memory access to the features.
-    var gridHeight = [13, 26, 52]
-    var gridWidth = [13, 26, 52]
-    
+    var gridHeight = [32, 64, 128]
+    var gridWidth = [32, 64, 128]
+
     var featurePointer = UnsafeMutablePointer<Double>(OpaquePointer(features[0].dataPointer))
     var channelStride = features[0].strides[0].intValue
     var yStride = features[0].strides[1].intValue
@@ -88,14 +88,14 @@ class YOLO {
                     // coordinates to the range 0 - 1. Then we add the cell coordinates
                     // (0-12) and multiply by the number of pixels per grid cell (32).
                     // Now x and y represent center of the bounding box in the original
-                    // 416x416 image space.
+                    // 1024x1024 image space.
                     let scale = powf(2.0,Float(i)) // scale pos by 2^i where i is the scale pyramid level
                     let x = (Float(cx) * blockSize + sigmoid(tx))/scale
                     let y = (Float(cy) * blockSize + sigmoid(ty))/scale
                     
                     // The size of the bounding box, tw and th, is predicted relative to
                     // the size of an "anchor" box. Here we also transform the width and
-                    // height into the original 416x416 image space.
+                    // height into the original 1024x1024 image space.
                     let w = exp(tw) * anchors[i][2*b    ]
                     let h = exp(th) * anchors[i][2*b + 1]
                     
@@ -124,7 +124,7 @@ class YOLO {
                     // tells us what kind of object it detected (but not where).
                     let confidenceInClass = bestClassScore * confidence
                     
-                    // Since we compute 13x13x3 = 507 bounding boxes, we only want to
+                    // Since we compute 32x32x3 = 3072 bounding boxes, we only want to
                     // keep the ones whose combined score is over a certain threshold.
                     if confidenceInClass > confidenceThreshold {
                         let rect = CGRect(x: CGFloat(x - w/2), y: CGFloat(y - h/2),

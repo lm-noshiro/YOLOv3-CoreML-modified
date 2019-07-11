@@ -23,6 +23,7 @@ class YOLO {
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
     if let output = try? model.prediction(input1: image) {
+//      print(output.output1[0])
       return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
     } else {
       return []
@@ -30,7 +31,6 @@ class YOLO {
   }
 
   public func computeBoundingBoxes(features: [MLMultiArray]) -> [Prediction] {
-    print(features[0][0])
     assert(features[0].count == 255*13*13)
     assert(features[1].count == 255*26*26)
     assert(features[2].count == 255*52*52)

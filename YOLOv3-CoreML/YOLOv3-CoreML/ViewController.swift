@@ -138,6 +138,10 @@ class ViewController: UIViewController {
     // Resize the input with Core Image to 416x416.
     guard let resizedPixelBuffer = resizedPixelBuffer else { return }
     let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+    print("YOLO.inputWidth", YOLO.inputWidth)
+    print("YOLO.inputHeight", YOLO.inputHeight)
+    print("CVPixelBufferGetWidth(pixelBuffer)", CVPixelBufferGetWidth(pixelBuffer))
+    print("CVPixelBufferGetHeight(pixelBuffer)", CVPixelBufferGetHeight(pixelBuffer))
     let sx = CGFloat(YOLO.inputWidth) / CGFloat(CVPixelBufferGetWidth(pixelBuffer))
     let sy = CGFloat(YOLO.inputHeight) / CGFloat(CVPixelBufferGetHeight(pixelBuffer))
     let scaleTransform = CGAffineTransform(scaleX: sx, y: sy)

@@ -88,8 +88,8 @@ class ViewController: UIViewController {
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
-    videoCapture.fps = 1
-    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
+    videoCapture.fps = 10
+    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.hd1920x1080) { success in
       if success {
         // Add the video preview into the UI.
         if let previewLayer = self.videoCapture.previewLayer {

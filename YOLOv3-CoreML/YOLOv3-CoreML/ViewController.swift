@@ -88,8 +88,8 @@ class ViewController: UIViewController {
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
-    videoCapture.fps = 1
-    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
+    videoCapture.fps = 10
+    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.hd1920x1080) { success in
       if success {
         // Add the video preview into the UI.
         if let previewLayer = self.videoCapture.previewLayer {
@@ -125,33 +125,49 @@ class ViewController: UIViewController {
 
   // MARK: - Doing inference
 
-  func predict(image: UIImage) {
-    if let pixelBuffer = image.pixelBuffer(width: YOLO.inputWidth, height: YOLO.inputHeight) {
-      predict(pixelBuffer: pixelBuffer)
-    }
-  }
+//  func predict(image: UIImage) {
+//    print("ここは通らない")
+//    if let pixelBuffer = image.pixelBuffer(width: YOLO.inputWidth, height: YOLO.inputHeight) {
+//      predict(pixelBuffer: pixelBuffer)
+//    }
+//  }
 
   func predict(pixelBuffer: CVPixelBuffer) {
+    print("ここは通るよ", CVPixelBufferGetWidth(pixelBuffer))
+
+    if let ptr = CVPixelBufferGetBaseAddress(pixelBuffer) {
+        let length = 20000
+        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
+        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
+        let int32array = Array(int32Buffer)
+        print("array: ", int32array[(length - 10)..<length] )
+    }
+
     // Measure how long it takes to predict a single video frame.
     let startTime = CACurrentMediaTime()
 
     // Resize the input with Core Image to 416x416.
     guard let resizedPixelBuffer = resizedPixelBuffer else { return }
     let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
-    print("YOLO.inputWidth", YOLO.inputWidth)
-    print("YOLO.inputHeight", YOLO.inputHeight)
-    print("CVPixelBufferGetWidth(pixelBuffer)", CVPixelBufferGetWidth(pixelBuffer))
-    print("CVPixelBufferGetHeight(pixelBuffer)", CVPixelBufferGetHeight(pixelBuffer))
+//    print("YOLO.inputWidth, PixelBufferWidth", YOLO.inputWidth, CVPixelBufferGetWidth(pixelBuffer))
     let sx = CGFloat(YOLO.inputWidth) / CGFloat(CVPixelBufferGetWidth(pixelBuffer))
     let sy = CGFloat(YOLO.inputHeight) / CGFloat(CVPixelBufferGetHeight(pixelBuffer))
     let scaleTransform = CGAffineTransform(scaleX: sx, y: sy)
     let scaledImage = ciImage.transformed(by: scaleTransform)
     ciContext.render(scaledImage, to: resizedPixelBuffer)
-
+    
     // This is an alternative way to resize the image (using vImage):
     //if let resizedPixelBuffer = resizePixelBuffer(pixelBuffer,
     //                                              width: YOLO.inputWidth,
     //                                              height: YOLO.inputHeight)
+
+    if let ptr = CVPixelBufferGetBaseAddress(pixelBuffer) {
+        let length = 20000
+        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
+        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
+        let int32array = Array(int32Buffer)
+        print("array!: ", int32array[(length - 10)..<length] )
+    }
 
     // Resize the input to 416x416 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {
@@ -249,7 +265,6 @@ extension ViewController: VideoCaptureDelegate {
   func videoCapture(_ capture: VideoCapture, didCaptureVideoFrame pixelBuffer: CVPixelBuffer?, timestamp: CMTime) {
     // For debugging.
     //predict(image: UIImage(named: "dog416")!); return
-
     semaphore.wait()
 
     if let pixelBuffer = pixelBuffer {
@@ -257,6 +272,7 @@ extension ViewController: VideoCaptureDelegate {
       // instead of on the VideoCapture queue. We use the semaphore to block
       // the capture queue and drop frames when Core ML can't keep up.
       DispatchQueue.global().async {
+//        print("videoCapture")
         self.predict(pixelBuffer: pixelBuffer)
         //self.predictUsingVision(pixelBuffer: pixelBuffer)
       }

@@ -32,8 +32,15 @@ class YOLO {
   public init() { }
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
+//    if let ptr = CVPixelBufferGetBaseAddress(image) {
+//        let length = 20000
+//        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
+//        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
+//        let int32array = Array(int32Buffer)
+//        print( int32array[(length - 10)..<length] )
+//    }
     if let output = try? model.prediction(input1: image) {
-      print(output.output1.doubleArray())
+//      print(output.output1.doubleArray())
       return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
     } else {
       return []

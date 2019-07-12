@@ -2,6 +2,16 @@ import Foundation
 import UIKit
 import CoreML
 
+extension MLMultiArray {
+    public func doubleArray() -> [Double] {
+        if self.count == 0 {
+            return [Double]()
+        }
+        let ptr = self.dataPointer.bindMemory(to: Double.self, capacity: self.count)
+        return Array(UnsafeBufferPointer(start: ptr, count: self.count))
+    }
+}
+
 class YOLO {
   public static let inputWidth = 1024
   public static let inputHeight = 1024
@@ -23,8 +33,15 @@ class YOLO {
   public init() { }
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
+    if let ptr = CVPixelBufferGetBaseAddress(image) {
+        let length = 20000
+        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
+        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
+        let int32array = Array(int32Buffer)
+        print( int32array[(length - 10)..<length] )
+    }
     if let output = try? model.prediction(input1: image) {
-      print(output.output1[0])
+//      print(output.output1.doubleArray())
       return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
     } else {
       return []

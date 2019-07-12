@@ -88,7 +88,7 @@ class ViewController: UIViewController {
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
-    videoCapture.fps = 10
+    videoCapture.fps = 1
     videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
       if success {
         // Add the video preview into the UI.
@@ -139,10 +139,7 @@ class ViewController: UIViewController {
     guard let resizedPixelBuffer = resizedPixelBuffer else { return }
     let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
 
-    print("YOLO.inputWidth", YOLO.inputWidth)
-    print("YOLO.inputHeight", YOLO.inputHeight)
-    print("CVPixelBufferGetWidth(pixelBuffer)", CVPixelBufferGetWidth(pixelBuffer))
-    print("CVPixelBufferGetHeight(pixelBuffer)", CVPixelBufferGetHeight(pixelBuffer))
+    print("YOLO.inputWidth, pixelBufferWidth", YOLO.inputWidth, CVPixelBufferGetWidth(pixelBuffer))
     let sx = CGFloat(YOLO.inputWidth) / CGFloat(CVPixelBufferGetWidth(pixelBuffer))
     let sy = CGFloat(YOLO.inputHeight) / CGFloat(CVPixelBufferGetHeight(pixelBuffer))
     let scaleTransform = CGAffineTransform(scaleX: sx, y: sy)

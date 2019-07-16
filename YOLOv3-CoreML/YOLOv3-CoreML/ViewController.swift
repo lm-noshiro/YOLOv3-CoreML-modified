@@ -82,14 +82,14 @@ class ViewController: UIViewController {
     // NOTE: If you choose another crop/scale option, then you must also
     // change how the BoundingBox objects get scaled when they are drawn.
     // Currently they assume the full input image is used.
-    request.imageCropAndScaleOption = .scaleFill
+    request.imageCropAndScaleOption = .scaleFit
   }
 
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
     videoCapture.fps = 10
-    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.hd1920x1080) { success in
+    videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
       if success {
         // Add the video preview into the UI.
         if let previewLayer = self.videoCapture.previewLayer {
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
     guard let resizedPixelBuffer = resizedPixelBuffer else { return }
     let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
 
-    print("YOLO.inputWidth, pixelBufferWidth", YOLO.inputWidth, CVPixelBufferGetWidth(pixelBuffer))
+//    print("YOLO.inputWidth, pixelBufferWidth", YOLO.inputWidth, CVPixelBufferGetWidth(pixelBuffer))
     let sx = CGFloat(YOLO.inputWidth) / CGFloat(CVPixelBufferGetWidth(pixelBuffer))
     let sy = CGFloat(YOLO.inputHeight) / CGFloat(CVPixelBufferGetHeight(pixelBuffer))
     let scaleTransform = CGAffineTransform(scaleX: sx, y: sy)
@@ -150,6 +150,8 @@ class ViewController: UIViewController {
     //if let resizedPixelBuffer = resizePixelBuffer(pixelBuffer,
     //                                              width: YOLO.inputWidth,
     //                                              height: YOLO.inputHeight)
+
+    print("resizeImage:          ", CACurrentMediaTime() - startTime)
 
     // Resize the input to 1024x1024 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {

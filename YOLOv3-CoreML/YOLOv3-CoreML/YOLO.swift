@@ -39,9 +39,16 @@ class YOLO {
 //        let int32array = Array(int32Buffer)
 //        print( int32array[(length - 10)..<length] )
 //    }
+    let startTime = CACurrentMediaTime()
     if let output = try? model.prediction(input1: image) {
 //      print(output.output1.doubleArray())
-      return computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
+
+        let afterPredictionTime = CACurrentMediaTime()
+        print("prediction:           ", afterPredictionTime - startTime)
+        let bboxes = computeBoundingBoxes(features: [output.output1, output.output2, output.output3])
+        print("computeBoundingBoxes: ", CACurrentMediaTime() - afterPredictionTime)
+        return bboxes
+
     } else {
       return []
     }

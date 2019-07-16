@@ -133,7 +133,7 @@ class ViewController: UIViewController {
 //  }
 
   func predict(pixelBuffer: CVPixelBuffer) {
-    print("ここは通るよ", CVPixelBufferGetWidth(pixelBuffer))
+//    print("ここは通るよ", CVPixelBufferGetWidth(pixelBuffer))
 
     if let ptr = CVPixelBufferGetBaseAddress(pixelBuffer) {
         let length = 20000
@@ -161,14 +161,16 @@ class ViewController: UIViewController {
     //                                              width: YOLO.inputWidth,
     //                                              height: YOLO.inputHeight)
 
-    if let ptr = CVPixelBufferGetBaseAddress(pixelBuffer) {
-        let length = 20000
-        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
-        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
-        let int32array = Array(int32Buffer)
-        print("array!: ", int32array[(length - 10)..<length] )
-    }
+//    if let ptr = CVPixelBufferGetBaseAddress(pixelBuffer) {
+//        let length = 20000
+//        let int32ptr = ptr.bindMemory(to: Int32.self, capacity: length)
+//        let int32Buffer = UnsafeBufferPointer(start: int32ptr, count: length)
+//        let int32array = Array(int32Buffer)
+//        print("array!: ", int32array[(length - 10)..<length] )
+//    }
 
+    print("resizeImage:          ", CACurrentMediaTime() - startTime)
+    
     // Resize the input to 416x416 and give it to our model.
     if let boundingBoxes = try? yolo.predict(image: resizedPixelBuffer) {
       let elapsed = CACurrentMediaTime() - startTime
